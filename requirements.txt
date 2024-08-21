@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 flask
 Flask-Mail 
 Flask-Cors
 sendgrid
+=======
+flask
+Flask-Mail 
+Flask-Cors
+sendgrid
+>>>>>>> ae0e8bdf1f69a9e72b5c455fd590c4ac2e1d1d0b
 python-dotenv

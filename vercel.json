@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "version": 2,
     "builds": [
@@ -7,4 +8,15 @@
       { "src": "/enviarcorreo", "dest": "/app.py" }
     ]
   }
+=======
+{
+    "version": 2,
+    "builds": [
+      { "src": "app.py", "use": "@vercel/python" }
+    ],
+    "routes": [
+      { "src": "/enviarcorreo", "dest": "/app.py" }
+    ]
+  }
+>>>>>>> ae0e8bdf1f69a9e72b5c455fd590c4ac2e1d1d0b
   
