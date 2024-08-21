@@ -12,19 +12,18 @@ CORS(app)  # Habilita CORS para todas las rutas y orígenes
 # Configuración SSL para evitar problemas con certificados no verificados
 ssl._create_default_https_context = ssl._create_unverified_context
 
-# Obtener la ruta del directorio donde se encuentra el script actual
-current_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Construir la ruta completa al archivo .env
-env_path = os.path.join(current_dir, '.env')
-
-# Cargar variables de entorno desde el archivo .env
-load_dotenv(env_path)
-
-# Obtener valores desde las variables de entorno
 api_key = os.getenv('APIKEY')
 from_email = os.getenv('FROM')
 to_emails = os.getenv('TO')
+
+# Verifica que las variables de entorno están configuradas
+@app.route('/debug', methods=['GET'])
+def debug_env():
+    return jsonify({
+        'APIKEY': api_key,
+        'FROM': from_email,
+        'TO': to_emails
+    })
 
 # Función para enviar correo electrónico utilizando SendGrid
 def send_mail_using_sendgrid(api_key, from_email, to_emails, subject, html_content):
