@@ -3,10 +3,11 @@ import ssl
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-
+CORS(app)
 # Configuración SSL para evitar problemas con certificados no verificados
 ssl._create_default_https_context = ssl._create_unverified_context
 
