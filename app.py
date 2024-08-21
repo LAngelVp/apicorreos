@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
-import configparser
 import ssl
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
@@ -10,14 +10,19 @@ app = Flask(__name__)
 # Configuración SSL para evitar problemas con certificados no verificados
 ssl._create_default_https_context = ssl._create_unverified_context
 
-# Leer configuración desde el archivo config.ini
-config = configparser.ConfigParser()
 # Obtener la ruta del directorio donde se encuentra el script actual
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Construir la ruta completa al archivo config.ini
-config_path = os.path.join(current_dir, 'config.ini')
-config.read(config_path)
+# Construir la ruta completa al archivo .env
+env_path = os.path.join(current_dir, '.env')
+
+# Cargar variables de entorno desde el archivo .env
+load_dotenv(env_path)
+
+# Obtener valores desde las variables de entorno
+api_key = os.getenv('APIKEY')
+from_email = os.getenv('FROM')
+to_emails = os.getenv('TO')
 
 # Función para enviar correo electrónico utilizando SendGrid
 def send_mail_using_sendgrid(api_key, from_email, to_emails, subject, html_content):
@@ -43,11 +48,6 @@ def enviar_correo():
         return jsonify({'error': 'No data provided'}), 400
 
     try:
-        settings = config["SETTINGS"]
-        api_key = settings.get("APIKEY")
-        from_email = settings.get("FROM")
-        to_emails = settings.get("TO","")
-
         if not api_key or not from_email or not to_emails:
             return jsonify({'error': 'Configuration is missing some parameters'}), 500
 
