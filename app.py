@@ -67,12 +67,11 @@ def enviar_correo():
         response = send_mail_using_sendgrid(api_key, from_email, to_emails, subject, html_content)
 
         if 'error' in response:
-            return jsonify(response), 500
+            return jsonify({'error': f"SendGrid Error: {response['error']}"}), 500
 
         return jsonify({'message': 'Correo enviado exitosamente'}), 200
 
     except Exception as e:
         return jsonify({'error': f'An unexpected error occurred: {str(e)}'}), 500
-
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
